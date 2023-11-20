@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-const TimerApp = () => {
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+const TimerApp: React.FC = () => {
+  const [minutes, setMinutes] = useState<number>(0);
+  const [seconds, setSeconds] = useState<number>(0);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
-    let timer;
+    let timer: NodeJS.Timeout;
 
     if (isRunning && (minutes > 0 || seconds > 0)) {
       timer = setInterval(() => {
@@ -44,12 +44,12 @@ const TimerApp = () => {
     setIsRunning(false);
   };
 
-  const handleChangeMinutes = (e) => {
+  const handleChangeMinutes = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
     setMinutes(isNaN(value) ? 0 : value);
   };
 
-  const handleChangeSeconds = (e) => {
+  const handleChangeSeconds = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
     setSeconds(isNaN(value) ? 0 : value);
   };
