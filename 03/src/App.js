@@ -15,8 +15,8 @@ const TodoList = () => {
     if (task.trim() !== "") {
       setTasks([...tasks, { name: task, completed: false }]);
       setTask("");
-      setShowModal(false); // タスク追加後にモーダルを閉じる
-      setError(""); // エラーメッセージをクリア
+      setShowModal(false);
+      setError("");
     } else {
       setError("タスクを入力してください");
     }
