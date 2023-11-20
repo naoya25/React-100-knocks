@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
+import './Counter.css'; // Assuming a separate CSS file for styling
 
 function Counter() {
   const [count, setCount] = useState(0);
 
   return (
-    <div>
-      <h1>{count}</h1>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
-      <button onClick={() => setCount(count - 1)}>Decrement</button>
+    <div className="app-container">
+      <div className="card">
+        <h3 className="display-text">React Counter</h3>
+        <h1 className="count-display">{count}</h1>
+        <div className="button-container">
+          <button className="increment-button" onClick={() => setCount(count + 1)}>+</button>
+          <button className="decrement-button" onClick={() => setCount(count - 1)}>-</button>
+        </div>
+      </div>
     </div>
   );
 }
