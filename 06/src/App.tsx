@@ -133,7 +133,7 @@ const ProfileCardGenerator: React.FC = () => {
                 color: "white",
               }}
             >
-              PNGとしてダウンロード
+              Download as PNG
             </button>
           </p>
         </div>
