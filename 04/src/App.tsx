@@ -1,67 +1,78 @@
 import React, { useState, useEffect } from "react";
+import "./App.css";
+import ProgressBar from "./ProgressBar";
 
 const TimerApp: React.FC = () => {
-  const [minutes, setMinutes] = useState<number>(0);
-  const [seconds, setSeconds] = useState<number>(0);
+  const [seconds, setSeconds] = useState<string>("0");
+  const [initialSeconds, setinItialSeconds] = useState<string>("60");
   const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
-    if (isRunning && (minutes > 0 || seconds > 0)) {
+    if (isRunning && +seconds > 0) {
       timer = setInterval(() => {
-        if (seconds === 0) {
-          if (minutes === 0) {
-            clearInterval(timer);
-            setIsRunning(false);
-            // 通知の処理や効果音再生のコードを追加
-            alert("タイマーが終了しました");
-          } else {
-            setMinutes(minutes - 1);
-            setSeconds(59);
-          }
+        const currentSeconds = +seconds;
+        if (currentSeconds === 0) {
+          clearInterval(timer);
+          setIsRunning(false);
+          alert("タイマーが終了しました");
         } else {
-          setSeconds(seconds - 1);
+          setSeconds((currentSeconds - 1).toString());
         }
       }, 1000);
     }
 
     return () => clearInterval(timer);
-  }, [isRunning, minutes, seconds]);
+  }, [isRunning, seconds]);
 
-  const handleStartPauseToggle = () => {
+  const handleStartToggle = () => {
     if (!isRunning && isValidTime()) {
       setIsRunning(true);
     } else {
       setIsRunning(false);
     }
+    setinItialSeconds(seconds);
+    setIsPaused(false);
+  };
+  const handleReStartToggle = () => {
+    if (!isRunning && isValidTime()) {
+      setIsRunning(true);
+    } else {
+      setIsRunning(false);
+    }
+    setIsPaused(false);
+  };
+  const handlePauseToggle = () => {
+    if (!isRunning && isValidTime()) {
+      setIsRunning(true);
+    } else {
+      setIsRunning(false);
+    }
+    setIsPaused(true);
   };
 
   const handleReset = () => {
-    setMinutes(0);
-    setSeconds(0);
+    setSeconds(initialSeconds);
     setIsRunning(false);
-  };
-
-  const handleChangeMinutes = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value, 10);
-    setMinutes(isNaN(value) ? 0 : value);
+    setIsPaused(false);
   };
 
   const handleChangeSeconds = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value, 10);
-    setSeconds(isNaN(value) ? 0 : value);
+    const value = e.target.value;
+    if (isNaN(+value)) {
+      setSeconds(value);
+      setErrorMessage("数字を入力してください");
+    } else {
+      setSeconds(value);
+      setErrorMessage("");
+    }
   };
 
   const isValidTime = () => {
-    if (
-      minutes < 0 ||
-      seconds < 0 ||
-      minutes >= 60 ||
-      isNaN(minutes) ||
-      isNaN(seconds)
-    ) {
+    if (+seconds <= 0 || 60 * 60 <= +seconds || isNaN(+seconds)) {
       setErrorMessage("無効な時間です");
       return false;
     } else {
@@ -71,22 +82,72 @@ const TimerApp: React.FC = () => {
   };
 
   return (
-    <div>
-      <div>
-        <label>
-          分：
-          <input type="number" value={minutes} onChange={handleChangeMinutes} />
-        </label>
-        <label>
-          秒：
-          <input type="number" value={seconds} onChange={handleChangeSeconds} />
-        </label>
+    <div
+      className="timer-body"
+      style={{
+        height: 400,
+        width: 300,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <div
+        style={{
+          position: "relative",
+          width: 200,
+          height: 200,
+          margin: "auto",
+        }}
+      >
+        <ProgressBar
+          percentage={(+seconds / +initialSeconds) * 100}
+          radius={100}
+          strokeWidth={10}
+        />
+        <input
+          type="text"
+          value={seconds}
+          onChange={handleChangeSeconds}
+          disabled={isRunning}
+          style={{
+            background: "none",
+            border: "none",
+            outline: "none",
+            display: "flex",
+            textAlign: "center",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "80%",
+            height: "80%",
+            borderRadius: "50%",
+            fontSize: "2.5em",
+          }}
+        />
       </div>
-      <button onClick={handleStartPauseToggle}>
-        {isRunning ? "一時停止" : "スタート"}
-      </button>
-      <button onClick={handleReset}>リセット</button>
-      {errorMessage && <p>{errorMessage}</p>}
+      <div
+        className="buttons"
+        style={{ display: "flex", justifyContent: "space-between", margin: 20 }}
+      >
+        {isPaused ? (
+          <button onClick={handleReStartToggle} disabled={isRunning}>
+            リスタート
+          </button>
+        ) : (
+          <button onClick={handleStartToggle} disabled={isRunning}>
+            スタート
+          </button>
+        )}
+        <button onClick={handlePauseToggle} disabled={!isRunning}>
+          一時停止
+        </button>
+        <button onClick={handleReset} disabled={!isRunning}>
+          リセット
+        </button>
+      </div>
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
     </div>
   );
 };
