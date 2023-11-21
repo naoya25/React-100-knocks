@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "./App.css";
+import Button from "./components/Button";
+import "./css/App.css";
 
 const App: React.FC = () => {
   const [input, setInput] = useState<string>("");
@@ -18,7 +19,7 @@ const App: React.FC = () => {
   };
 
   const handleClear = () => {
-    setInput("0");
+    setInput("");
   };
 
   return (
@@ -52,34 +53,44 @@ const App: React.FC = () => {
         />
       </div>
       <div className="buttons">
+        {[
+          ["7", "8", "9", "+"],
+          ["4", "5", "6", "-"],
+          ["1", "2", "3", "*"],
+          ["0", "/", ".", "="],
+        ].map((row, rowIndex) => (
+          <div className="row" key={rowIndex}>
+            {row.map((buttonLabel) => (
+              <Button
+                label={buttonLabel}
+                onClick={() =>
+                  buttonLabel === "="
+                    ? handleCalculate()
+                    : handleButtonClick(buttonLabel)
+                }
+                style={{
+                  width: 47,
+                  height: 33,
+                  margin: 6,
+                  border: "none",
+                  borderRadius: 5,
+                }}
+              />
+            ))}
+          </div>
+        ))}
         <div className="row">
-          <button onClick={() => handleButtonClick("7")}>7</button>
-          <button onClick={() => handleButtonClick("8")}>8</button>
-          <button onClick={() => handleButtonClick("9")}>9</button>
-          <button onClick={() => handleButtonClick("+")}>+</button>
-        </div>
-        <div className="row">
-          <button onClick={() => handleButtonClick("4")}>4</button>
-          <button onClick={() => handleButtonClick("5")}>5</button>
-          <button onClick={() => handleButtonClick("6")}>6</button>
-          <button onClick={() => handleButtonClick("-")}>-</button>
-        </div>
-        <div className="row">
-          <button onClick={() => handleButtonClick("1")}>1</button>
-          <button onClick={() => handleButtonClick("2")}>2</button>
-          <button onClick={() => handleButtonClick("3")}>3</button>
-          <button onClick={() => handleButtonClick("*")}>*</button>
-        </div>
-        <div className="row">
-          <button onClick={() => handleButtonClick("0")}>0</button>
-          <button onClick={() => handleButtonClick("/")}>/</button>
-          <button onClick={() => handleButtonClick(".")}>.</button>
-          <button onClick={handleCalculate}>=</button>
-        </div>
-        <div className="row">
-          <button style={{ width: 70 }} onClick={handleClear}>
-            Clear
-          </button>
+          <Button
+            label={"Clear"}
+            onClick={() => handleClear()}
+            style={{
+              width: 70,
+              height: 33,
+              margin: 6,
+              border: "none",
+              borderRadius: 5,
+            }}
+          />
         </div>
       </div>
     </div>
