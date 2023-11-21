@@ -131,6 +131,7 @@ const ProfileCardGenerator: React.FC = () => {
                 width: 310,
                 height: 50,
                 color: "white",
+                outline: "none",
               }}
             >
               Download as PNG
