@@ -1,0 +1,14 @@
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row button {
+  width: 47px;
+  height: 33px;
+  margin: 6px;
+  border: none;
+  border-radius: 5px;
+}
