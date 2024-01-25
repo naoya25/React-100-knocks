@@ -30,7 +30,7 @@ const Calendar: React.FC = () => {
 
   const generateCalendarDates = (month: Date) => {
     let startDate = startOfMonth(month);
-    startDate = subDays(startDate, getDay(startDate) - 1);
+    startDate = subDays(startDate, (getDay(startDate) + 6) % 7);
     const endDate = endOfMonth(month);
     const dates: Date[][] = [];
     let week: Date[] = [];
