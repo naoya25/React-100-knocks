@@ -6,6 +6,10 @@
 1. https://qiita.com/Sicut_study/items/c38b51907d18131b31f6
 1. https://qiita.com/Sicut_study/items/ccfc451360d3f22bde63
 1. https://qiita.com/Sicut_study/items/0fb7e80bc0a973000ae9
+1. https://qiita.com/Sicut_study/items/3bd13a266feade56a4d0
+1. https://qiita.com/Sicut_study/items/a27e5789a1b23438d77c
 
 Typescriptよくわからずにそのままjsで書いているところが多々あります
 ご了承ください
+
+npx create-next-app@latest
