@@ -8,6 +8,7 @@
 1. https://qiita.com/Sicut_study/items/0fb7e80bc0a973000ae9
 1. https://qiita.com/Sicut_study/items/3bd13a266feade56a4d0
 1. https://qiita.com/Sicut_study/items/a27e5789a1b23438d77c
+1. https://qiita.com/Sicut_study/items/3bfdce97ca51b609eb02
 
 Typescriptよくわからずにそのままjsで書いているところが多々あります
 ご了承ください
